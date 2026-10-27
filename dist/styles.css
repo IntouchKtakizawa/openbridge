@@ -132,8 +132,16 @@ h1 em { color: var(--coral); font-weight: 500; }
 .portrait-kenta { background: #d8f1ff; }
 .portrait-gao { background: #ffe69a; }
 .portrait-cooper { background: #d7f6ed; }
+.kenta-portrait { cursor: help; outline-offset: 4px; }
+.kenta-portrait img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, filter .5s ease; }
+.portrait-bio { position: absolute; inset: 0; z-index: 1; padding: clamp(20px, 2.2vw, 28px); display: flex; align-items: flex-end; color: white; background: linear-gradient(180deg, rgba(6,31,79,.08) 0%, rgba(6,31,79,.96) 72%); opacity: 0; transform: translateY(18px); transition: opacity .35s ease, transform .35s ease; }
+.portrait-bio p { margin: 0; font-size: clamp(.72rem, 1vw, .82rem); line-height: 1.52; }
+.portrait-bio strong { display: block; margin-bottom: 8px; color: var(--yellow); font-family: Georgia, serif; font-size: 1.35rem; font-weight: 500; }
+.kenta-portrait:hover img, .kenta-portrait:focus img, .kenta-portrait:focus-within img { transform: scale(1.025); filter: saturate(.8); }
+.kenta-portrait:hover .portrait-bio, .kenta-portrait:focus .portrait-bio, .kenta-portrait:focus-within .portrait-bio { opacity: 1; transform: none; }
+.kenta-portrait:hover .photo-label, .kenta-portrait:focus .photo-label, .kenta-portrait:focus-within .photo-label { opacity: 0; }
 .initial { font-family: Georgia, serif; font-size: clamp(6rem, 10vw, 9rem); line-height: 1; opacity: .22; }
-.photo-label { position: absolute; bottom: 18px; left: 18px; padding: 8px 11px; background: rgba(255,255,255,.9); border-radius: 8px; font-size: .65rem; font-weight: 800; letter-spacing: .04em; }
+.photo-label { position: absolute; z-index: 2; bottom: 18px; left: 18px; padding: 8px 11px; background: rgba(255,255,255,.9); border-radius: 8px; font-size: .65rem; font-weight: 800; letter-spacing: .04em; transition: opacity .25s ease; }
 .tutor-content { padding: 27px; }
 .tutor-role { margin-bottom: 9px; color: var(--coral); text-transform: uppercase; font-size: .63rem; font-weight: 850; letter-spacing: .12em; }
 .tutor-content h3 { margin-bottom: 12px; font-family: Georgia, serif; font-size: 2.1rem; font-weight: 500; }
