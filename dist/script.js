@@ -31,6 +31,26 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
 
+document.querySelectorAll('.program-card').forEach((card) => {
+  const front = card.querySelector('.program-front');
+  const back = card.querySelector('.program-back');
+  const openButton = front.querySelector('.flip-trigger');
+  const closeButton = back.querySelector('.flip-trigger');
+
+  function setFlipped(flipped) {
+    card.classList.toggle('is-flipped', flipped);
+    openButton.setAttribute('aria-expanded', String(flipped));
+    front.setAttribute('aria-hidden', String(flipped));
+    back.setAttribute('aria-hidden', String(!flipped));
+    openButton.tabIndex = flipped ? -1 : 0;
+    closeButton.tabIndex = flipped ? 0 : -1;
+    (flipped ? closeButton : openButton).focus();
+  }
+
+  openButton.addEventListener('click', () => setFlipped(true));
+  closeButton.addEventListener('click', () => setFlipped(false));
+});
+
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const data = Object.fromEntries(new FormData(form).entries());
