@@ -54,21 +54,18 @@ document.querySelectorAll('.program-card').forEach((card) => {
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const data = Object.fromEntries(new FormData(form).entries());
-  data.savedAt = new Date().toISOString();
-  localStorage.setItem('openbridge-interest-draft', JSON.stringify(data));
-  status.textContent = 'Draft saved on this device. Nothing has been sent yet.';
-});
+  const subject = encodeURIComponent(`Class registration — ${data.name}`);
+  const body = encodeURIComponent(`FFA OpenBridge class registration
 
-try {
-  const saved = JSON.parse(localStorage.getItem('openbridge-interest-draft'));
-  if (saved) {
-    ['name', 'age', 'program', 'message'].forEach((field) => {
-      if (form.elements[field] && saved[field]) form.elements[field].value = saved[field];
-    });
-    status.textContent = 'Your previous draft is loaded from this device.';
-  }
-} catch (_) {
-  localStorage.removeItem('openbridge-interest-draft');
-}
+Name: ${data.name}
+Contact email: ${data.email}
+Learner age range: ${data.age}
+Program: ${data.program}
+
+What they would like help with:
+${data.message}`);
+  status.textContent = 'Opening your email app. Please send the prepared email to complete registration.';
+  window.location.href = `mailto:contact.ffaopenbridge@gmail.com?subject=${subject}&body=${body}`;
+});
 
 document.querySelector('#year').textContent = new Date().getFullYear();
