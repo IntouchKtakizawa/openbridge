@@ -12,7 +12,7 @@ The deployable site is stored in `dist/`. GitHub Actions publishes that director
 
 ## Editing portraits
 
-Replace each `.portrait-placeholder` block in `dist/index.html` with an approved portrait image. Use descriptive `alt` text and keep the real image cropped to a similar landscape ratio.
+Tutor portraits live in `dist/assets/` and are referenced by both the cards and the full profile dialogs in `dist/index.html`. Keep descriptive alt text. Card portraits fill their frames; dialog portraits show the complete image. Hover or keyboard focus reveals a summary, and either the portrait or “More about me” opens the full profile. Close with the top-right X, Escape, or the backdrop.
 
 ## Before public launch
 

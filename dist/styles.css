@@ -132,14 +132,6 @@ h1 em { color: var(--coral); font-weight: 500; }
 .portrait-kenta { background: #d8f1ff; }
 .portrait-gao { background: #ffe69a; }
 .portrait-cooper { background: #d7f6ed; }
-.kenta-portrait { cursor: help; outline-offset: 4px; }
-.kenta-portrait img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, filter .5s ease; }
-.portrait-bio { position: absolute; inset: 0; z-index: 1; padding: clamp(20px, 2.2vw, 28px); display: flex; align-items: flex-end; color: white; background: linear-gradient(180deg, rgba(6,31,79,.08) 0%, rgba(6,31,79,.96) 72%); opacity: 0; transform: translateY(18px); transition: opacity .35s ease, transform .35s ease; }
-.portrait-bio p { margin: 0; font-size: clamp(.72rem, 1vw, .82rem); line-height: 1.52; }
-.portrait-bio strong { display: block; margin-bottom: 8px; color: var(--yellow); font-family: Georgia, serif; font-size: 1.35rem; font-weight: 500; }
-.kenta-portrait:hover img, .kenta-portrait:focus img, .kenta-portrait:focus-within img { transform: scale(1.025); filter: saturate(.8); }
-.kenta-portrait:hover .portrait-bio, .kenta-portrait:focus .portrait-bio, .kenta-portrait:focus-within .portrait-bio { opacity: 1; transform: none; }
-.kenta-portrait:hover .photo-label, .kenta-portrait:focus .photo-label, .kenta-portrait:focus-within .photo-label { opacity: 0; }
 .initial { font-family: Georgia, serif; font-size: clamp(6rem, 10vw, 9rem); line-height: 1; opacity: .22; }
 .photo-label { position: absolute; z-index: 2; bottom: 18px; left: 18px; padding: 8px 11px; background: rgba(255,255,255,.9); border-radius: 8px; font-size: .65rem; font-weight: 800; letter-spacing: .04em; transition: opacity .25s ease; }
 .tutor-content { padding: 27px; }
@@ -280,4 +272,61 @@ input:focus, select:focus, textarea:focus { border-color: var(--coral); box-shad
   .form-row { grid-template-columns: 1fr; gap: 0; }
   .site-footer { padding: 50px 20px; grid-template-columns: 1fr; gap: 35px; }
   .footer-meta { grid-column: auto; }
+}
+
+/* Tutor previews and full profiles */
+.tutor-portrait { position: relative; display: block; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border: 0; padding: 0; color: white; text-align: left; cursor: pointer; }
+.tutor-portrait > img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.portrait-bio { position: absolute; inset: 0; padding: clamp(18px, 2vw, 28px); display: flex; align-items: flex-end; background: linear-gradient(180deg, rgba(6,31,79,.1), rgba(6,31,79,.96)); opacity: 0; transform: translateY(12px); transition: opacity .25s ease, transform .25s ease; pointer-events: none; }
+.portrait-bio > span { font-size: clamp(.8rem, 1.05vw, .95rem); line-height: 1.5; }
+.portrait-bio strong { display: block; margin-bottom: 10px; color: var(--yellow); font: 500 1.6rem Georgia, serif; }
+.tutor-card:focus-within .portrait-bio { opacity: 1; transform: none; }
+.tutor-card:focus-within .photo-label { opacity: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .tutor-card:hover .portrait-bio { opacity: 1; transform: none; }
+  .tutor-card:hover .photo-label { opacity: 0; }
+  .tutor-card:hover .tutor-portrait > img { transform: scale(1.025); }
+}
+.profile-button { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: 100%; min-height: 46px; margin-top: 24px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--cream); color: var(--ink); font: inherit; font-size: .85rem; font-weight: 800; cursor: pointer; }
+.profile-button:hover { background: #d8f1ff; }
+.tutor-portrait:focus-visible, .profile-button:focus-visible, .profile-close:focus-visible { outline: 3px solid var(--coral); outline-offset: -4px; }
+body.profile-open { overflow: hidden; }
+.profile-dialog { position: fixed; inset: 0; width: min(1060px, calc(100% - 40px)); max-width: none; max-height: calc(100dvh - 40px); margin: auto; padding: 0; overflow: auto; border: 1px solid var(--line); border-radius: 24px; color: var(--ink); background: var(--paper); box-shadow: 0 30px 100px rgba(6,31,79,.3); overscroll-behavior: contain; }
+.profile-dialog::backdrop { background: rgba(6,20,44,.72); backdrop-filter: blur(6px); }
+.profile-panel { position: relative; display: grid; grid-template-columns: .95fr 1.05fr; }
+.profile-photo { position: relative; display: flex; align-items: flex-start; align-self: stretch; min-height: 0; }
+.profile-photo img { position: sticky; top: 0; display: block; width: 100%; height: auto; max-height: calc(100dvh - 42px); object-fit: contain; }
+.profile-details { padding: 56px 40px 36px; }
+.profile-details h2 { margin-bottom: 28px; font: 500 clamp(2.3rem, 4vw, 3.3rem)/1.05 Georgia, serif; letter-spacing: -.035em; }
+.profile-section { margin-bottom: 24px; }
+.profile-section h3 { margin-bottom: 8px; font: 500 1.25rem Georgia, serif; }
+.profile-section p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.75; }
+.profile-close { position: sticky; top: 12px; right: 12px; z-index: 3; grid-column: 1 / -1; justify-self: end; width: 44px; height: 44px; margin: 12px 12px -56px 0; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: white; color: var(--ink); box-shadow: 0 3px 12px rgba(6,31,79,.12); font: 400 2rem/1 sans-serif; cursor: pointer; }
+.profile-close:hover { background: var(--cream); }
+@media (max-width: 980px) and (min-width: 641px) {
+  .tutor-card:last-child .tutor-portrait { height: 100%; aspect-ratio: auto; min-height: 360px; }
+}
+@media (max-width: 720px) {
+  .profile-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); border-radius: 18px; }
+  .profile-panel { grid-template-columns: 1fr; }
+  .profile-photo { position: static; min-height: 0; justify-content: center; }
+  .profile-photo img { position: static; width: 100%; max-height: 44dvh; object-fit: contain; }
+  .profile-details { padding: 28px 24px 16px; }
+}
+
+.tutor-portrait .photo-label { color: var(--ink); }
+
+/* Keep the photo fixed while longer biographies scroll independently. */
+.profile-dialog { overflow: hidden; }
+.profile-panel { height: min(503.5px, calc((100vw - 40px) * .475), calc(100dvh - 40px)); }
+#profile-kenta .profile-panel { height: min(458.2px, calc((100vw - 40px) * .43225), calc(100dvh - 40px)); }
+.profile-photo { height: 100%; min-height: 0; }
+.profile-photo img { position: static; width: 100%; height: 100%; max-height: none; object-fit: contain; }
+.profile-details { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.profile-close { position: absolute; top: 12px; right: 12px; margin: 0; }
+@media (max-width: 720px) {
+  .profile-panel, #profile-kenta .profile-panel { height: auto; max-height: calc(100dvh - 24px); grid-template-rows: auto minmax(0, 1fr); }
+  .profile-photo { height: min(38dvh, calc(100vw - 24px)); }
+  .profile-photo img { width: 100%; height: 100%; max-height: none; }
+  .profile-details { max-height: calc(62dvh - 26px); padding-top: 28px; }
 }

@@ -69,3 +69,27 @@ ${data.message}`);
 });
 
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+
+// Native dialogs provide focus trapping and Escape-key dismissal.
+let profileOpener = null;
+document.querySelectorAll('[data-profile-open]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const dialog = document.querySelector(`#profile-${button.dataset.profileOpen}`);
+    profileOpener = button;
+    dialog.showModal();
+    dialog.querySelector('.profile-details').scrollTop = 0;
+    document.body.classList.add('profile-open');
+  });
+});
+document.querySelectorAll('.profile-dialog').forEach((dialog) => {
+  dialog.querySelector('.profile-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => {
+    const rect = dialog.getBoundingClientRect();
+    if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('profile-open');
+    profileOpener?.focus({ preventScroll: true });
+  });
+});
