@@ -93,3 +93,23 @@ document.querySelectorAll('.profile-dialog').forEach((dialog) => {
     profileOpener?.focus({ preventScroll: true });
   });
 });
+
+// The banner dips toward the pointer and settles when it leaves.
+const banner = document.querySelector('.hero-visual');
+const bannerMotion = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+function resetBannerTilt() {
+  banner.style.removeProperty('--banner-rotate-x');
+  banner.style.removeProperty('--banner-rotate-y');
+}
+banner.addEventListener('pointermove', (event) => {
+  if (!bannerMotion.matches || event.pointerType === 'touch') return;
+  const bounds = banner.getBoundingClientRect();
+  const x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
+  const y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height));
+  banner.style.setProperty('--banner-rotate-x', `${(0.5 - y) * 12}deg`);
+  banner.style.setProperty('--banner-rotate-y', `${(x - 0.5) * 12}deg`);
+});
+banner.addEventListener('pointerleave', resetBannerTilt);
+banner.addEventListener('pointercancel', resetBannerTilt);
+bannerMotion.addEventListener('change', resetBannerTilt);
+window.addEventListener('blur', resetBannerTilt);
